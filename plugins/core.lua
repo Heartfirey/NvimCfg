@@ -1,22 +1,20 @@
 return {
   -- customize alpha options
+
   {
     "goolord/alpha-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
-      opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
-      }
+      opts.section.header.val = function ()
+        local headers = require "user.core.headers"
+        local headerNames = {}
+        for name, _ in pairs(headers) do
+          table.insert(headerNames, name)
+        end
+        local randomName = headerNames[math.random(#headerNames)]
+        local randomHeader = headers[randomName]
+        return randomHeader
+      end
       return opts
     end,
   },

@@ -17,6 +17,11 @@ function M.mappings(maps)
     }
     
   end
+  
+  if is_available "smoka7/multicursors.nvim" then
+    maps.v["<leader>m"] = { "<cmd>MCStart<cr>", desc = "Create a selection for selected text or word under the cursor" }
+    maps.n["<leader>m"] = { "<cmd>MCStart<cr>", desc = "Create a selection for selected text or word under the cursor" }
+  end
 
   -- This config is used for Compiler.nvim, but now deprecated.
   -- maps.n["<F6>"] = { "<cmd>CompilerOpen<cr>", noremap = true, silent = true }
