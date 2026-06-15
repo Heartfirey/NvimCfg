@@ -1,5 +1,7 @@
 -- customize mason plugins
 return {
+  -- `:MasonUpdate` build crashes on mason 2.x; registry fetches lazily anyway
+  { "mason-org/mason.nvim", build = false },
   -- use mason-lspconfig to configure LSP installations
   {
     "williamboman/mason-lspconfig.nvim",
