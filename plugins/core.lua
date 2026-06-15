@@ -5,7 +5,7 @@ return {
     "goolord/alpha-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
-      opts.section.header.val = function ()
+      opts.section.header.val = function()
         local headers = require "user.core.headers"
         local headerNames = {}
         for name, _ in pairs(headers) do

@@ -12,7 +12,14 @@ require("lazy").setup({
     },
   },
   { import = "community" },
-  { import = "plugins" },
+  -- user plugins, organized into sub-folders (lazy.nvim imports are non-recursive,
+  -- so each sub-folder must be listed explicitly)
+  { import = "plugins.core" },
+  { import = "plugins.lsp" },
+  { import = "plugins.ui" },
+  { import = "plugins.coding" },
+  { import = "plugins.editor" },
+  { import = "plugins.util" },
 } --[[@as LazySpec]], {
   -- Configure any other `lazy.nvim` configuration options here
   install = { colorscheme = { "catppuccin", "astrodark", "habamax" } },

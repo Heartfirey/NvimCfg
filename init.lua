@@ -7,6 +7,10 @@ if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Silence the `vim.tbl_islist is deprecated` warning emitted by plugins that
+-- still call it: point it straight at the non-deprecated `vim.islist`.
+if vim.islist then vim.tbl_islist = vim.islist end
+
 -- validate that lazy is available
 if not pcall(require, "lazy") then
   -- stylua: ignore
@@ -15,6 +19,7 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
+require "async_resolver"
 require "lazy_setup"
 require "polish"
 

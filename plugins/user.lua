@@ -9,5 +9,5 @@ return {
   --     require("lsp_signature").setup()
   --   end,
   -- },
-  { "mfussenegger/nvim-dap" }
+  { "mfussenegger/nvim-dap" },
 }

@@ -5,6 +5,8 @@ return {
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
   { import = "astrocommunity.editing-support.zen-mode-nvim" },
+  -- sticky context header showing the current function/class at the top
+  { import = "astrocommunity.editing-support.nvim-treesitter-context" },
   {
     "folke/zen-mode.nvim",
     opts = {
