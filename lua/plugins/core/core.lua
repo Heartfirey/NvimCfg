@@ -1,20 +1,15 @@
 return {
-  -- customize alpha options
-
+  -- customize the dashboard header (AstroNvim v6 uses snacks.nvim dashboard)
   {
-    "goolord/alpha-nvim",
+    "folke/snacks.nvim",
     opts = function(_, opts)
-      -- customize the dashboard header
-      opts.section.header.val = function ()
-        local headers = require "headers"
-        local headerNames = {}
-        for name, _ in pairs(headers) do
-          table.insert(headerNames, name)
-        end
-        local randomName = headerNames[math.random(#headerNames)]
-        local randomHeader = headers[randomName]
-        return randomHeader
-      end
+      local headers = require "headers"
+      local names = vim.tbl_keys(headers)
+      local chosen = headers[names[math.random(#names)]]
+      opts.dashboard = opts.dashboard or {}
+      opts.dashboard.preset = opts.dashboard.preset or {}
+      -- snacks expects a single string; our headers are tables of lines
+      opts.dashboard.preset.header = table.concat(chosen, "\n")
       return opts
     end,
   },
