@@ -11,32 +11,13 @@ vim.opt.rtp:prepend(lazypath)
 -- still call it: point it straight at the non-deprecated `vim.islist`.
 if vim.islist then vim.tbl_islist = vim.islist end
 
--- Silence the `vim.lsp.with() is deprecated` warning on Neovim 0.12+. AstroNvim
--- core still uses it to set hover/signatureHelp borders; reimplement it 1:1
--- (minus the vim.deprecate call) until upstream drops the usage.
-if vim.lsp and vim.lsp.with then
-  vim.lsp.with = function(handler, override_config)
-    return function(err, result, ctx, config)
-      return handler(err, result, ctx, vim.tbl_deep_extend("force", config or {}, override_config))
-    end
-  end
-end
-
--- Suppress specific, harmless deprecation warnings we can't fix from user config
--- because they come from pinned plugins (astrolsp) calling 0.12-deprecated APIs:
---   * `client.supports_method` (dot-style call)
---   * `vim.lsp.codelens.refresh({ bufnr = ... })`
--- Behaviour is unaffected; both still work on 0.12. Drop entries here once the
--- AstroNvim stack is updated to a Neovim 0.12-aware release.
+-- Suppress the harmless `client.supports_method` deprecation: none-ls's
+-- `method_wrapper` still calls it dot-style on Neovim 0.12. Behaviour is
+-- unaffected; drop this once none-ls switches to the colon form.
 do
-  local patterns = { "^client%.supports_method", "^vim%.lsp%.codelens%.refresh" }
   local orig_deprecate = vim.deprecate
   vim.deprecate = function(name, ...)
-    if type(name) == "string" then
-      for _, p in ipairs(patterns) do
-        if name:match(p) then return end
-      end
-    end
+    if type(name) == "string" and name:match "^client%.supports_method" then return end
     return orig_deprecate(name, ...)
   end
 end
